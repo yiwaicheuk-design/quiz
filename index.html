@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>路軌及工作安全測驗（單題作答）</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans HK", sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+    }
+    .card {
+      background: #fff;
+      max-width: 600px;
+      width: 100%;
+      padding: 28px;
+      border-radius: 14px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+    }
+    .step-label {
+      display: inline-block;
+      font-size: 12px;
+      color: #1d4ed8;
+      background: #eff6ff;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    h1 {
+      font-size: 19px;
+      margin: 0 0 18px;
+      line-height: 1.5;
+      color: #111827;
+    }
+    .field {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 11px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+    input:focus {
+      outline: none;
+      border-color: #2563eb;
+    }
+    .error-msg {
+      color: #dc2626;
+      font-size: 13px;
+      margin-top: 6px;
+      display: none;
+    }
+    .user-summary {
+      font-size: 13px;
+      color: #4b5563;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    button.opt {
+      text-align: left;
+      padding: 12px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      background: #fff;
+      font-size: 15px;
+      line-height: 1.45;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    button.opt:hover:not(:disabled) {
+      background: #f9fafb;
+      border-color: #9ca3af;
+    }
+    button.opt:disabled {
+      cursor: default;
+    }
+    button.opt.correct-choice {
+      border-color: #10b981;
+      background: #ecfdf5;
+    }
+    button.opt.wrong-choice {
+      border-color: #ef4444;
+      background: #fef2f2;
+    }
+    .feedback {
+      margin-top: 18px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 1.55;
+      display: none;
+    }
+    .feedback.correct {
+      display: block;
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+    .feedback.wrong {
+      display: block;
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+    .done-banner {
+      margin-top: 14px;
+      font-size: 13px;
+      color: #374151;
+      background: #f3f4f6;
+      padding: 10px 12px;
+      border-radius: 8px;
+      display: none;
+    }
+    .actions {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+    button.primary {
+      padding: 11px 18px;
+      border: none;
+      border-radius: 8px;
+      background: #2563eb;
+      color: #fff;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    button.primary:hover {
+      background: #1d4ed8;
+    }
+    button.secondary {
+      padding: 10px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      background: #fff;
+      color: #374151;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    button.secondary:hover {
+      background: #f9fafb;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <section id="page1">
+      <div class="step-label">第 1 頁 / 共 2 頁 · 填寫個人資料</div>
+      <h1>開始測驗前請先填寫個人資料</h1>
+
+      <form id="infoForm" novalidate>
+        <div class="field">
+          <label for="userName">姓名／稱呼 *</label>
+          <input type="text" id="userName" placeholder="例如：陳大文" required />
+        </div>
+
+        <div class="field">
+          <label for="userEmail">電郵地址 *</label>
+          <input type="email" id="userEmail" placeholder="例如：chan@example.com" required />
+        </div>
+
+        <div class="field">
+          <label for="userPhone">聯絡電話／員工編號（選填）</label>
+          <input type="tel" id="userPhone" placeholder="例如：9123 4567" />
+        </div>
+
+        <div class="error-msg" id="formError">請填寫有效嘅姓名同電郵地址先可以進入下一頁。</div>
+
+        <div class="actions">
+          <button class="primary" id="nextBtn" type="submit">下一步：抽 1 題作答</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="page2" class="hidden">
+      <div class="step-label" id="qTag">第 2 頁 / 共 2 頁 · 本次抽中 1 題</div>
+      <div class="user-summary" id="userSummary"></div>
+
+      <h1 id="questionText">載入中...</h1>
+      <div class="options" id="optionsBox"></div>
+      <div class="feedback" id="feedbackBox"></div>
+      <div class="done-banner" id="doneBanner">今次測驗已完成（只作答 1 題）。如需重新開始，請重新整理網頁。</div>
+
+      <div class="actions">
+        <button class="secondary" id="backBtn" type="button">返回改資料</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const questionBank = [
+      {
+        question: "1. 在工作場所進行正確的「人力提舉」(Manual Handling)時，下列那一項做法是絕對正確?",
+        options: [
+          "提舉重物時，雙膝應盡量打直，主要依靠腰部的力量向上抬起",
+          "雙腳要前後微開分開站立，保持身體重心穩固，並將物件盡量靠近身體",
+          "如搬運物需要轉向時，應直接扭動腰部來改變方向",
+          "如果物件太重，用一口氣全力將它抬起"
+        ],
+        answer: 1
+      },
+      {
+        question: "2. 在路軌上工作時，強制規定必須穿著符合安全標準的「安全鞋」，其鞋底設計對預防滑倒和受傷有何作用?",
+        options: [
+          "安全鞋底只是普通橡膠，沒有特別防滑功能",
+          "安全鞋未有任何標準及功能",
+          "具備防油、耐磨、高防滑紋理的橡膠鞋底，以及防止被道床尖銳鐵屑或釘子刺穿的鋼底",
+          "安全鞋底極度柔軟以方便工作"
+        ],
+        answer: 2
+      },
+      {
+        question: "3. 因
